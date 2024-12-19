@@ -8,21 +8,7 @@ Willkommen zu unserem JavaScript-Backup-Tool! Dieses Tool wurde entwickelt, um E
 - **Einfache Wiederherstellung**: Stellen Sie Ihre Projekte mit nur wenigen Klicks wieder her.
 - **Benutzerfreundlich**: Intuitive Benutzeroberfläche für eine einfache Bedienung.
 
-## Installation
-
-Um das Tool zu installieren, führen Sie den folgenden Befehl aus:
-
-```bash
-npm install js-backup-tool
-```
-
 ## Verwendung
-
-Nach der Installation können Sie das Tool mit dem folgenden Befehl starten:
-
-```bash
-js-backup-tool start
-```
 
 Weitere Informationen und detaillierte Anweisungen finden Sie in der [Dokumentation](#).
 
