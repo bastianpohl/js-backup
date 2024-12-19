@@ -1,0 +1,22 @@
+2024-12-19T21:29:35.843Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2024-12-19T21:29:35.846Z: Error backing up text.txt to ./backup/text-backup3.txt: ENOENT: no such file or directory, copyfile 'text.txt' -> './backup/text-backup3.txt'
+2024-12-19T21:29:52.547Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2024-12-19T21:29:52.555Z: Error backing up text.txt to ./backup/text-backup3.txt: ENOENT: no such file or directory, copyfile 'text.txt' -> './backup/text-backup3.txt'
+2024-12-19T21:31:54.410Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2024-12-19T21:31:54.414Z: Error backing up text.txt to ./backup/text-backup3.txt: ENOENT: no such file or directory, copyfile 'text.txt' -> './backup/text-backup3.txt'
+2024-12-19T21:33:17.123Z: Successfully restored ./backup/test-backup.txt to test.txt
+2024-12-19T21:33:17.128Z: Error restoring ./backup/text-backup3.txt to text.txt: ENOENT: no such file or directory, copyfile './backup/text-backup3.txt' -> 'text.txt'
+2024-12-19T21:34:38.604Z: Error restoring ./backup/text-backup3.txt to text.txt: ENOENT: no such file or directory, copyfile './backup/text-backup3.txt' -> 'text.txt'
+2024-12-19T21:34:40.607Z: Successfully restored ./backup/test-backup.txt to test.txt
+2024-12-19T21:35:38.971Z: Error restoring ./backup/text-backup3.txt to text.txt: ENOENT: no such file or directory, copyfile './backup/text-backup3.txt' -> 'text.txt'
+2024-12-19T21:35:40.755Z: Skipped restoring ./backup/test-backup.txt to test.txt
+2024-12-19T21:36:48.982Z: Error restoring ./backup/text-backup3.txt to text.txt: ENOENT: no such file or directory, copyfile './backup/text-backup3.txt' -> 'text.txt'
+2024-12-19T21:36:51.523Z: Skipped restoring to test.txt
+2024-12-19T21:36:51.526Z: Successfully restored ./backup/test-backup.txt to test.txt
+2024-12-19T21:37:29.671Z: Error restoring ./backup/text-backup3.txt to text.txt: ENOENT: no such file or directory, copyfile './backup/text-backup3.txt' -> 'text.txt'
+2024-12-19T21:37:31.617Z: Skipped restoring to test.txt
+2024-12-19T21:37:31.617Z: Successfully restored ./backup/test-backup.txt to test.txt
+2024-12-19T21:39:43.601Z: Error restoring ./backup/text-backup3.txt to text.txt: ENOENT: no such file or directory, copyfile './backup/text-backup3.txt' -> 'text.txt'
+2024-12-19T21:39:45.500Z: Skipped restoring to test.txt
+2024-12-19T21:39:53.666Z: Error restoring ./backup/text-backup3.txt to text.txt: ENOENT: no such file or directory, copyfile './backup/text-backup3.txt' -> 'text.txt'
+2024-12-19T21:39:55.136Z: Successfully restored ./backup/test-backup.txt to test.txt
