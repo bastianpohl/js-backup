@@ -2,14 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const readline = require("readline");
 
-const parseCsv = () =>  fs
+const loadFiles = () =>  fs
     .readFileSync("./config.csv", "utf8")
     .split("\n")
     .filter((line) => line.trim())
     .map((line) => line.split(";"))
     .map(([file, backup]) => ({ file, backup }))
 
-const loadFiles = (files) =>
+const handlePaths = (files) =>
     files.map((item) => {
     // Normalize path separators for current OS
     let file = item.file.replace(/[\/\\]/g, path.sep);
@@ -20,13 +20,11 @@ const loadFiles = (files) =>
 const backupSingleFile = (item) => {
   try {
     fs.copyFileSync(item.file, item.backup);
-    const timestamp = new Date().toISOString();
-    const successMessage = `${timestamp}: Successfully backed up ${item.file} to ${item.backup}\n`;
-    logger(successMessage);
+    let message = `Successfully backed up ${item.file} to ${item.backup}\n`;
+    logger(message);
   } catch (error) {
-    const timestamp = new Date().toISOString();
-    const errorMessage = `${timestamp}: Error backing up ${item.file} to ${item.backup}: ${error.message}\n`;
-    logger(errorMessage);
+    let = `Error backing up ${item.file} to ${item.backup}: ${error.message}\n`;
+    logger(message);  
   }
 };
 
@@ -35,7 +33,8 @@ const logger = (message) => {
     console.log("Creating log file");
     fs.writeFileSync("log.txt", "");
   }
-  fs.appendFileSync("log.txt", message);
+  let timestamp = new Date().toISOString();
+  fs.appendFileSync("log.txt", `${timestamp}: ${message}`);
 };
 
 const confirmOverwrite = async (file) => {
@@ -53,8 +52,7 @@ const confirmOverwrite = async (file) => {
     });
 
     if (answer.trim().toLowerCase() !== "yes") {
-      const timestamp = new Date().toISOString();
-      const skipMessage = `${timestamp}: Skipped restoring to ${file}\n`;
+      let skipMessage = `Skipped restoring to ${file}\n`;
       logger(skipMessage);
       return false;
     }
@@ -66,19 +64,17 @@ const restoreSingleFile = async (item) => {
   try {
     if (await confirmOverwrite(item.file)) {
       fs.copyFileSync(item.backup, item.file);
-      const timestamp = new Date().toISOString();
-      const successMessage = `${timestamp}: Successfully restored ${item.backup} to ${item.file}\n`;
-      logger(successMessage);
+      let message = `Successfully restored ${item.backup} to ${item.file}\n`;
+      logger(message);
     }
   } catch (error) {
-    const timestamp = new Date().toISOString();
-    const errorMessage = `${timestamp}: Error restoring ${item.backup} to ${item.file}: ${error.message}\n`;
-    logger(errorMessage);
+    let message = `Error restoring ${item.backup} to ${item.file}: ${error.message}\n`;
+    logger(message);
   }
 };
 
-const paths = parseCsv();
-const files = loadFiles(paths);
+const paths = loadFiles();
+const files = handlePaths(paths);
 
 const args = process.argv.slice(2);
 
