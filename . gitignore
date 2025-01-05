@@ -7,7 +7,7 @@ package-lock.json
 
 # Backup & Logs
 *.backup
-backup/
+!backup/
 log.txt
 logs/
 *.log

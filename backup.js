@@ -2,12 +2,26 @@ const fs = require("fs");
 const path = require("path");
 const readline = require("readline");
 
-const loadFiles = () =>  fs
-    .readFileSync("./config.csv", "utf8")
+const args = process.argv.slice(2);
+let paths;
+let files; 
+
+
+const loadFiles = () => {
+  const configPath = args[1];
+  
+  if (!configPath) {
+    console.error("Please provide the path to the config file as the second argument.");
+    process.exit(1);
+  }
+
+  return fs
+    .readFileSync(configPath, "utf8")
     .split("\n")
     .filter((line) => line.trim())
     .map((line) => line.split(";"))
-    .map(([file, backup]) => ({ file, backup }))
+    .map(([file, backup]) => ({ file, backup }));
+};
 
 const handlePaths = (files) =>
     files.map((item) => {
@@ -73,11 +87,6 @@ const restoreSingleFile = async (item) => {
   }
 };
 
-const paths = loadFiles();
-const files = handlePaths(paths);
-
-const args = process.argv.slice(2);
-
 const askMode = () => {
   return new Promise((resolve) => {
     const rl = readline.createInterface({
@@ -98,14 +107,20 @@ const askMode = () => {
 
 const executeMode = async () => {
   let mode;
-  if (args.includes("--backup")) {
-    mode = "1";
-  } else if (args.includes("--restore")) {
-    mode = "2";
-  } else {
 
+  let backup = args.includes("--backup") ? true : false
+  let restore = args.includes("--restore") ? true : false 
+
+  if (backup && restore) {
+    console.log("Please provide a valid argument: --backup or --restore");
+    process.exit(1);
+  }
+
+  if (!backup && !restore) {
     mode = await askMode();
   }
+
+  mode = backup ? "1" : restore ? "2" : mode;
 
   if (mode === "1") {
     files.forEach((file) => backupSingleFile(file));
@@ -115,5 +130,8 @@ const executeMode = async () => {
     console.log("Invalid selection. Please provide a valid argument: --backup or --restore");
   }
 };
+
+paths = loadFiles();
+files = handlePaths(paths);
 
 executeMode();
