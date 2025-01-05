@@ -1,12 +1,15 @@
+const { log } = require("console");
 const fs = require("fs");
+const { connect } = require("http2");
 const path = require("path");
 const readline = require("readline");
 
 const args = process.argv.slice(2);
 let paths;
 let files; 
+let mode;
 
-
+// Load files from config file
 const loadFiles = () => {
   const configPath = args[1];
   
@@ -23,6 +26,7 @@ const loadFiles = () => {
     .map(([file, backup]) => ({ file, backup }));
 };
 
+// Normalize path separators for current OS
 const handlePaths = (files) =>
     files.map((item) => {
     // Normalize path separators for current OS
@@ -31,6 +35,7 @@ const handlePaths = (files) =>
     return { file, backup };
   });
 
+// Backup a single file 
 const backupSingleFile = (item) => {
   try {
     fs.copyFileSync(item.file, item.backup);
@@ -42,15 +47,7 @@ const backupSingleFile = (item) => {
   }
 };
 
-const logger = (message) => {
-  if (!fs.existsSync("log.txt")) {
-    console.log("Creating log file");
-    fs.writeFileSync("log.txt", "");
-  }
-  let timestamp = new Date().toISOString();
-  fs.appendFileSync("log.txt", `${timestamp}: ${message}`);
-};
-
+// Confirm overwrite of file if it already exists in mode restore to avoid accidental data loss
 const confirmOverwrite = async (file) => {
   if (fs.existsSync(file)) {
     const rl = readline.createInterface({
@@ -74,6 +71,7 @@ const confirmOverwrite = async (file) => {
   return true;
 };
 
+// Restore a single file
 const restoreSingleFile = async (item) => {
   try {
     if (await confirmOverwrite(item.file)) {
@@ -87,8 +85,68 @@ const restoreSingleFile = async (item) => {
   }
 };
 
-const askMode = () => {
-  return new Promise((resolve) => {
+//  check for valid parameter for restore mode
+const checParameterForRestore = () => {
+  let argument = args[1];
+
+  if (!argument) return undefined;
+
+  if (Number(argument)) {
+    return file.backup === files[Number(argument) - 1].backup;
+  }
+
+  if (String(argument)) {
+    return files.findIndex(file => file.file === argument);
+  }
+
+  let message = "Invalid argument provided"; 
+  logger(message);    
+  process.exit(1);  
+}
+
+// Backup files 
+const backup = (files) => { 
+  files.forEach((file) => backupSingleFile(file));
+}
+
+// Restore files
+const restore = (files) => {  
+  // check if a parameter is provided for restore mode
+  let fileIndex = checParameterForRestore(); 
+
+  // no file found with the provided argument
+  if (fileIndex === -1) {
+    let message = "No File found with the provided argument";  
+    logger(message);  
+    process.exit(1);
+
+  }
+
+  // restore single file if a valid parameter is provided
+  if (!fileIndex()) {
+    restoreSingleFile(files[fileIndex]);
+    process.exit(0);  
+  } 
+
+  // restore all files if no argument is provided
+  files.forEach((file) => restoreSingleFile(file));
+} 
+
+// Loging function
+const logger = (message) => {
+  if (!fs.existsSync("log.txt")) {
+    console.log("Creating log file");
+    fs.writeFileSync("log.txt", "");
+  }
+  let timestamp = new Date().toISOString();
+  let message = `${timestamp}: ${message}`;
+  fs.appendFileSync("log.txt", message);
+  console.log((message)); 
+};
+
+// Ask mode wehen no mode or no valid mode is provided
+const askMode = async () => {
+  const answer = await new Promise((resolve) => {
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
@@ -103,35 +161,51 @@ const askMode = () => {
       resolve(answer);
     });
   });
+
+  if (answer.trim() === "1") {
+    return "backup";
+  } else if (answer.trim() === "2") {
+    return "restore";
+  } else {
+    let message = "Invalid mode selected";  
+    logger(message);  
+    process.exit(1);
+  }
 };
 
-const executeMode = async () => {
-  let mode;
-
-  let backup = args.includes("--backup") ? true : false
-  let restore = args.includes("--restore") ? true : false 
+// Get mode
+const getMode = async () => {
+  const backup = args.includes("--backup");
+  const restore = args.includes("--restore");
 
   if (backup && restore) {
-    console.log("Please provide a valid argument: --backup or --restore");
+    let message = "Please provide a valid argument: --backup or --restore";
+    logger(message);  
     process.exit(1);
   }
 
   if (!backup && !restore) {
-    mode = await askMode();
+    return await askMode();
   }
 
-  mode = backup ? "1" : restore ? "2" : mode;
-
-  if (mode === "1") {
-    files.forEach((file) => backupSingleFile(file));
-  } else if (mode === "2") {
-    files.forEach((file) => restoreSingleFile(file));
-  } else {
-    console.log("Invalid selection. Please provide a valid argument: --backup or --restore");
-  }
+  return backup ? "backup" : "restore";
 };
 
+// Execute mode
+const executeMode = () => { 
+  const validMods = ["backup", "restore"]; 
+
+  if (!validMods.includes(mode)) {
+    let message = "Invalid mode selected";
+    logger(message);
+    process.exit(1);
+  }
+  // execute mode cause a function with the same name as the mode exists
+  eval(mode)(files);  
+};
+
+// Main function
+mode = getMode();
 paths = loadFiles();
 files = handlePaths(paths);
-
 executeMode();
