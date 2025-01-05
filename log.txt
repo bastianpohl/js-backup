@@ -20,3 +20,21 @@
 2024-12-19T21:39:45.500Z: Skipped restoring to test.txt
 2024-12-19T21:39:53.666Z: Error restoring ./backup/text-backup3.txt to text.txt: ENOENT: no such file or directory, copyfile './backup/text-backup3.txt' -> 'text.txt'
 2024-12-19T21:39:55.136Z: Successfully restored ./backup/test-backup.txt to test.txt
+2025-01-03T19:32:23.112Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2025-01-03T19:32:23.119Z: Successfully backed up test2.txt to ./backup/test2-backup.txt
+2025-01-03T19:59:31.538Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2025-01-03T19:59:31.546Z: Successfully backed up test2.txt to ./backup/test2-backup.txt
+2025-01-03T19:59:38.916Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2025-01-03T19:59:38.919Z: Successfully backed up test2.txt to ./backup/test2-backup.txt
+2025-01-03T20:08:42.545Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2025-01-03T20:08:42.551Z: Successfully backed up test2.txt to ./backup/test2-backup.txt
+2025-01-03T20:13:57.546Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2025-01-03T20:13:57.557Z: Successfully backed up test2.txt to ./backup/test2-backup.txt
+2025-01-05T17:55:31.207Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2025-01-05T17:55:31.220Z: Successfully backed up test2.txt to ./backup/test2-backup.txt
+2025-01-05T19:49:33.058Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2025-01-05T19:49:33.069Z: Successfully backed up test2.txt to ./backup/test2-backup.txt
+2025-01-05T20:01:09.463Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2025-01-05T20:01:09.474Z: Successfully backed up test2.txt to ./backup/test2-backup.txt
+2025-01-05T20:10:53.883Z: Successfully backed up test.txt to ./backup/test-backup.txt
+2025-01-05T20:10:53.890Z: Successfully backed up test2.txt to ./backup/test2-backup.txt

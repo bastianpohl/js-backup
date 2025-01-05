@@ -91,8 +91,9 @@ const checParameterForRestore = () => {
 
   if (!argument) return undefined;
 
+  // if Number ist provided, return the index of the file as index for arra
   if (Number(argument)) {
-    return file.backup === files[Number(argument) - 1].backup;
+    return Number(argument)-1;
   }
 
   if (String(argument)) {

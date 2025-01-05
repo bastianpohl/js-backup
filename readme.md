@@ -1,20 +1,11 @@
 # Einführung
-
-Willkommen zu unserem JavaScript-Backup-Tool! Dieses Tool wurde entwickelt, um Entwicklern dabei zu helfen, ihre JavaScript-Projekte effizient zu sichern und wiederherzustellen. Es bietet eine einfache Möglichkeit, regelmäßige Backups zu erstellen und sicherzustellen, dass Ihre Arbeit immer geschützt ist.
+Dies ist ein kleines Backup- & Restore-Skript, welches sehr simpel gehalten. Es soll einfach nur eine Liste von Dateien sichern und diese bei Bedarf wiederherstellen
 
 ## Hauptfunktionen
+- ** Backup alles **: Sichert eine Liste von Dateien an individuelle Orteda
+- ** Wiederherstellung **: Spielt alle gesicherterten Dateien an den jeweils ursprünglichen Ort zurück.
 
-- **Automatische Backups**: Planen Sie regelmäßige Backups Ihrer Projekte.
-- **Einfache Wiederherstellung**: Stellen Sie Ihre Projekte mit nur wenigen Klicks wieder her.
-- **Benutzerfreundlich**: Intuitive Benutzeroberfläche für eine einfache Bedienung.
-
-## Verwendung
-
-Weitere Informationen und detaillierte Anweisungen finden Sie in der [Dokumentation](#).
-
-Viel Spaß beim Sichern Ihrer Projekte!
 ## Modi
-
 Das Tool bietet zwei Hauptmodi:
 
 - **Backup-Modus**: Führen Sie den folgenden Befehl aus, um ein Backup Ihrer Dateien zu erstellen:
@@ -27,5 +18,4 @@ Das Tool bietet zwei Hauptmodi:
     ```
 
 ## Konfiguration
-
-Die zu sichernden Dateien werden in der `config.csv`-Datei gespeichert. Stellen Sie sicher, dass diese Datei korrekt konfiguriert ist, um die gewünschten Dateien zu sichern.
+Die zu sichernden Dateien werden in der `config.csv`-Datei gespeichert. Jeder Datensatz hat zwei Spalten. In der ersten Spalte steht die Pfad der zu sicherenden Datei. Die zweite Spalte beinhaltet den Pfadd unter dem die Datei gesichert wird.
