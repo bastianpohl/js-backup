@@ -1,6 +1,4 @@
-const { log } = require("console");
 const fs = require("fs");
-const { connect } = require("http2");
 const path = require("path");
 const readline = require("readline");
 
